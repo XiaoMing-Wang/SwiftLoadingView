@@ -8,39 +8,60 @@
 import UIKit
 import Foundation
 
-/** loading大小 */
-let WXMLoadSize : CGSize = CGSize.init(width: 76.5, height: 77.5)
-
-/** 状态大小 */
-let WXMLoadStatusSize : CGSize = CGSize.init(width: 93.5, height: 93.5)
-let WXMLoadIconSize : CGFloat = 35.0
-
-/** 隐藏时间 */
-let WXMHideDelay : CGFloat = 3.50
-
-/** 字体 */
-let WXMLoadFont : UIFont = UIFont.systemFont(ofSize: 16)
-
-/** tag */
+/// 配置
 let WXMLoadTag : Int = 20555
-
-/** 垂直偏移 */
 let WXMLoadMargin : CGFloat = -10.0
 
-/** 外边距 */
-let WXMLoadOutsideMargin : CGFloat = 45.0
 
-/** 上下间距 */
-let WXMTopBtmMargin : CGFloat = 10.5
+struct WXMLoadCof {
+    
+    /// load最小size
+    let loadSize : CGSize = CGSize.init(width: 76.5, height: 77.5)
+    
+    /// 状态大小
+    let iconSide : CGFloat = 35.0
+    
+    /// 隐藏时间
+    let hideDelay : CGFloat = 3.50
+    
+    /** 字体 */
+    let loadFont : UIFont = UIFont.systemFont(ofSize: 16)
+    
+    /** tag */
+    let loadTag : Int = 20555
+    
+    /** 外边距 */
+    let loadOutsideMargin : CGFloat = 45.0
+    
+    /// 内边距
+    let loadpadMargin : CGFloat = 18.0
+    
+    /** 上下间距 */
+    let topBtmMargin : CGFloat = 10.5
+    
+    /// 宽度
+    let sWidth : CGFloat = UIScreen.main.bounds.width
+    
+    /** 圆角 */
+    let loadRounded : CGFloat = 12.0
+    
+    /** 全屏颜色 */
+    let fullColor : UIColor = UIColor.white
+    let backColor : UIColor = UIColor.black
+    
+    /// message最大宽度
+    var loadMsgWidth: CGFloat {
+        get {
+            return (sWidth - 2.0 * loadOutsideMargin - 2.0 * loadpadMargin)
+        }
+    }
+    
+    /// 所有的边距
+    var loadpadAllMargin: CGFloat {
+        get {
+            return (2.0 * loadpadMargin + topBtmMargin)
+        }
+    }
 
-/** 内边距 */
-let WXMLoadpadMargin : CGFloat = 18.0
-let WXMLoadpadAllMargin : CGFloat = (WXMLoadpadMargin * 2.0 + WXMTopBtmMargin)
 
-/** 圆角 */
-let WXMLoadRounded : CGFloat = 12.0
-let WXMLoadMinHeight : CGFloat = 49.0
-let WXMLSWidth : CGFloat = UIScreen.main.bounds.width
-let WXMLoadFullColor : UIColor = UIColor.white
-let WXMLoadBackColor : UIColor = UIColor.black
-let WXMLoadMsgWidth : CGFloat = (WXMLSWidth - 2.0 * WXMLoadOutsideMargin - 2.0 * WXMLoadpadMargin)
+}

@@ -39,6 +39,9 @@ class WXMLoadingView:UIView {
     fileprivate var gesture : Bool = true
     fileprivate var advanceCancel : Bool = false
     
+    /// 配置结构体
+    fileprivate let cof : WXMLoadCof = WXMLoadCof()
+    
     /// 显示菊花
     class func showLoadingSuper(supMedium:AnyObject,
                                 loadType:WXMLoadingType,
@@ -83,7 +86,7 @@ class WXMLoadingView:UIView {
     fileprivate func differentInterfaces() {
         
         frame = displayView.bounds
-        contentView.layer.cornerRadius = WXMLoadRounded
+        contentView.layer.cornerRadius = cof.loadRounded
         
         switch iType {
         case .def:
@@ -99,7 +102,7 @@ class WXMLoadingView:UIView {
         case .full:
             
             isUserInteractionEnabled = true
-            backgroundColor = WXMLoadFullColor
+            backgroundColor = cof.fullColor
             
         case .forbid:
             
@@ -120,7 +123,7 @@ class WXMLoadingView:UIView {
         /// 配置message
         let messageCof = { () -> (CGFloat, CGFloat) in
             self.messageLabel.text = self.contontMessage ?? " "
-            let expected = CGSize.init(width: WXMLoadMsgWidth, height: CGFloat(MAXFLOAT))
+            let expected = CGSize.init(width: self.cof.loadMsgWidth, height: CGFloat(MAXFLOAT))
             let msgSize = self.messageLabel.sizeThatFits(expected)
             self.messageLabel.frame = CGRect.init(origin: .zero, size: msgSize)
             return (msgSize.width, msgSize.height)
@@ -129,29 +132,29 @@ class WXMLoadingView:UIView {
         switch self.loadType {
         case .loading:
             
-            contentView.frame = CGRect.init(x: 0, y: 0, width: WXMLoadSize.width, height: WXMLoadSize.height)
-            contentView.layer.cornerRadius = WXMLoadRounded
+            contentView.frame = CGRect.init(origin: .zero, size: cof.loadSize)
+            contentView.layer.cornerRadius = cof.loadRounded
             contentView.addSubview(indicatorView)
             displayCenter(inCenter: true)
             
         case .message:
             
             let message = messageCof()
-            let width = message.0 + WXMLoadpadMargin * 2.0 + 8.0
-            let height = message.1 + WXMLoadpadMargin * 2.0
+            let width = message.0 + cof.loadpadMargin * 2.0 + 6.0
+            let height = message.1 + cof.loadpadMargin * 2.0 + 1.0
             contentView.frame = CGRect.init(origin: .zero, size: CGSize.init(width: width, height: height))
-            contentView.layer.cornerRadius = WXMLoadRounded
+            contentView.layer.cornerRadius = cof.loadRounded
             contentView.addSubview(messageLabel)
             displayCenter(inCenter: true)
             
         case .loadingMessage:
             
             let message = messageCof()
-            let width = max(message.0 + WXMLoadpadMargin * 2.0, WXMLoadSize.width)
-            let height = WXMLoadIconSize + message.1 + WXMLoadpadAllMargin
+            let width = max(message.0 + cof.loadpadMargin * 2.0 + 6.0, cof.loadSize.width)
+            let height = cof.iconSide + message.1 + cof.loadpadAllMargin
             
             contentView.frame = CGRect.init(origin: .zero, size: CGSize.init(width: width, height: height))
-            contentView.layer.cornerRadius = WXMLoadRounded
+            contentView.layer.cornerRadius = cof.loadRounded
             contentView.addSubview(indicatorView)
             contentView.addSubview(messageLabel)
             displayCenter(inCenter: false)
@@ -159,8 +162,8 @@ class WXMLoadingView:UIView {
         case .success, .fail:
             
             let message = messageCof()
-            let width = max(message.0 + WXMLoadpadMargin * 2.0, WXMLoadSize.width)
-            let height = WXMLoadIconSize + message.1 + WXMLoadpadAllMargin
+            let width = max(message.0 + cof.loadpadMargin * 2.0 + 6.0, cof.loadSize.width)
+            let height = cof.iconSide + message.1 + cof.loadpadAllMargin
             
             if loadType == .success {
                 iconImageView.image = UIImage.init(named: "MBHUD_Success")
@@ -169,7 +172,7 @@ class WXMLoadingView:UIView {
             }
             
             contentView.frame = CGRect.init(origin: .zero, size: CGSize.init(width: width, height: height))
-            contentView.layer.cornerRadius = WXMLoadRounded
+            contentView.layer.cornerRadius = cof.loadRounded
             contentView.addSubview(iconImageView)
             contentView.addSubview(messageLabel)
             displayCenter(inCenter: false)
@@ -185,7 +188,7 @@ class WXMLoadingView:UIView {
         reductionGestures()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideLoadView), object: nil)
         if loadType == .success || loadType == .fail || loadType == .message {
-            self.perform(#selector(hideLoadView), with: nil, afterDelay: TimeInterval(WXMHideDelay))
+            self.perform(#selector(hideLoadView), with: nil, afterDelay: TimeInterval(cof.hideDelay))
         }
         
     }
@@ -222,13 +225,13 @@ class WXMLoadingView:UIView {
             
         } else {
             
-            let x = (contentView.frame.size.width - WXMLoadIconSize) / 2;
-            let oringin = CGPoint.init(x: x, y: WXMLoadpadMargin);
-            let size = CGSize.init(width: WXMLoadIconSize, height: WXMLoadIconSize)
+            let x = (contentView.frame.size.width - cof.iconSide) / 2;
+            let oringin = CGPoint.init(x: x, y: cof.loadpadMargin);
+            let size = CGSize.init(width: cof.iconSide, height: cof.iconSide)
             iconImageView.frame = CGRect.init(origin: oringin, size: size)
             indicatorView.frame = CGRect.init(origin: oringin, size: size)
             
-            let top = iconImageView.frame.origin.y + iconImageView.frame.size.height + WXMTopBtmMargin
+            let top = iconImageView.frame.origin.y + iconImageView.frame.size.height + cof.topBtmMargin
             messageLabel.frame = CGRect.init(origin: CGPoint.init(x:0, y: top), size: messageLabel.frame.size)
             messageLabel.center = CGPoint.init(x: contentX, y: messageLabel.center.y)
         }
@@ -261,8 +264,8 @@ class WXMLoadingView:UIView {
     //MARK: 懒加载
     public lazy var contentView:UIView = {
         var contentView = UIView()
-        contentView.backgroundColor = WXMLoadBackColor
-        contentView.layer.cornerRadius = WXMLoadRounded
+        contentView.backgroundColor = cof.backColor
+        contentView.layer.cornerRadius = cof.loadRounded
         contentView.layer.masksToBounds = true
         return contentView
     }()
@@ -277,14 +280,14 @@ class WXMLoadingView:UIView {
     public lazy var messageLabel:UILabel = {
         var messageLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 0))
         messageLabel.textAlignment = .center
-        messageLabel.font = WXMLoadFont
+        messageLabel.font = cof.loadFont
         messageLabel.textColor = UIColor.white
         messageLabel.numberOfLines = 0
         return messageLabel
     }()
-        
+    
     public lazy var iconImageView:UIImageView = {
-        let wh = WXMLoadIconSize
+        let wh = cof.iconSide
         var iconImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: wh, height: wh))
         return iconImageView
     }()
