@@ -10,8 +10,8 @@ import Foundation
 
 
 extension UIViewController {
-   
-    func currentSelf() ->Bool {
+    
+    func currentSelf() -> Bool {
         return self.navigationController?.visibleViewController == self
     }
     
@@ -54,8 +54,8 @@ extension UIViewController {
                                         yMargin: WXMLoadMargin,
                                         delay: 0)
     }
-        
-    func showLoadingMessage(_ message:String) {
+    
+    func showLoadingMessage(_ message: String) {
         if currentSelf() { WXMLoadingView.hiddenLoadingSuper(supMedium: self.navigationController) }
         WXMLoadingView.showLoadingSuper(supMedium: self,
                                         loadType: .loadingMessage,
@@ -65,7 +65,7 @@ extension UIViewController {
                                         delay: 0)
     }
     
-    func showMessage(_ message:String) {
+    func showMessage(_ message: String) {
         WXMLoadingView.showLoadingSuper(supMedium: self.navigationController ?? self,
                                         loadType: .message,
                                         iType: .def,
@@ -74,7 +74,7 @@ extension UIViewController {
                                         delay: 0)
     }
     
-    func showSuccessMessage(_ message:String?) {
+    func showSuccessMessage(_ message: String?) {
         WXMLoadingView.showLoadingSuper(supMedium: self.navigationController ?? self,
                                         loadType: .success,
                                         iType: .def,
@@ -83,7 +83,7 @@ extension UIViewController {
                                         delay: 0)
     }
     
-    func showFailMessage(_ message:String?) {
+    func showFailMessage(_ message: String?) {
         WXMLoadingView.showLoadingSuper(supMedium: self.navigationController ?? self,
                                         loadType: .fail,
                                         iType: .def,
@@ -91,8 +91,7 @@ extension UIViewController {
                                         yMargin: WXMLoadMargin,
                                         delay: 0)
     }
-    
-    
+        
 }
 
 extension UIView {
@@ -133,7 +132,7 @@ extension UIView {
                                         delay: 0)
     }
     
-    func showLoadingMessage(_ message:String) {
+    func showLoadingMessage(_ message: String) {
         WXMLoadingView.showLoadingSuper(supMedium: self,
                                         loadType: .loadingMessage,
                                         iType: .disable,
@@ -142,7 +141,7 @@ extension UIView {
                                         delay: 0)
     }
     
-    func showMessage(_ message:String) {
+    func showMessage(_ message: String) {
         WXMLoadingView.showLoadingSuper(supMedium: self,
                                         loadType: .message,
                                         iType: .def,
@@ -151,7 +150,7 @@ extension UIView {
                                         delay: 0)
     }
     
-    func showSuccessMessage(_ message:String?) {
+    func showSuccessMessage(_ message: String?) {
         WXMLoadingView.showLoadingSuper(supMedium: self,
                                         loadType: .success,
                                         iType: .def,
@@ -160,7 +159,7 @@ extension UIView {
                                         delay: 0)
     }
     
-    func showFailMessage(_ message:String?) {
+    func showFailMessage(_ message: String?) {
         WXMLoadingView.showLoadingSuper(supMedium: self,
                                         loadType: .fail,
                                         iType: .def,
